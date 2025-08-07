@@ -103,7 +103,7 @@ Click Summarize.
 The concise summary will appear below.
 
 
-# Troubleshooting:
+### Troubleshooting:
 
 
 ```bash
@@ -131,7 +131,7 @@ Model not found:
 Make sure you have pulled the LLaMA 2 model correctly with Ollama.
 
 
-# Future Improvements:
+### Future Improvements:
 
 
 Multi-language support
