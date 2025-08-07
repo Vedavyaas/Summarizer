@@ -34,7 +34,7 @@ Summarizer is a lightweight web application that uses the Ollama AI platform (wi
 
 ## Setup Instructions
 
-### 1. Clone the repository
+ 1. Clone the repository
 
 ```bash
 git clone https://github.com/your-username/Summarizer.git
