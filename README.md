@@ -4,6 +4,10 @@
 
 ---
 
+
+## Latest Update : August,7
+
+
 ## Overview
 
 Summarizer is a lightweight web application that uses the Ollama AI platform (with LLaMA 2) and a Java Spring Boot backend to transform lengthy descriptions into concise, essential summaries. The frontend provides a simple and clean interface to input event text and receive a quick summary highlighting the most relevant details.
@@ -39,24 +43,12 @@ cd Summarizer
 2. Backend Setup
 
 
-Navigate to the backend folder (e.g., Backend-Summarizer):
+Navigate to the backend folder ( Backend-Summarizer):
 
 
 ```bash
-cd Backend-Summarizer
+cd Summarizer/Backend-Summarizer
 ```
-
-
-Configure application.properties (under src/main/resources/) with the correct Ollama URL and model:
-
-
-spring.ai.ollama.base-url=http://localhost:11434/
-
-
-spring.ai.ollama.model=llama2:latest
-
-
-server.port=8001
 
 
 Build and run the Spring Boot backend
@@ -85,32 +77,21 @@ Make sure Ollama is running locally, and the model is ready.
 5. Frontend Setup
 
    
-Navigate to the frontend folder (e.g., Frontend-Summarizer):
+Navigate to the frontend folder (Frontend-Summarizer):
 
 
 ```bash
-cd ../Frontend-Summarizer
+cd Summarizer/Frontend-Summarizer
 ```
 
 
-Open index.html directly in a browser OR serve it via a simple HTTP server:
-
-
-Using Python 3:
-
-
-```bash
-python3 -m http.server 8080
-```
-
-
-Open http://localhost:8080 in your browser.
+Open index.html directly in a browser.
 
 
 6. Usage
 
    
-Open the frontend page.
+Open the Home page.
 
 
 Paste or type a lengthy event description into the input box.
