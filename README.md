@@ -30,6 +30,7 @@ Summarizer is a lightweight web application that uses the Ollama AI platform (wi
 - Ollama installed and LLaMA 2 model pulled locally
 - Docker (optional, if using Docker for Ollama)
 - Git
+- Twilio account with WhatsApp sandbox enabled (for WhatsApp integration)
 ---
 
 ## Setup Instructions
@@ -102,6 +103,42 @@ Click Summarize.
 
 The concise summary will appear below.
 
+## WhatsApp Integration Setup
+
+1. **Create a Twilio Account and Enable WhatsApp Sandbox**  
+   - Sign up or log in to Twilio.  
+   - Navigate to **Messaging → Try it Out → Send a WhatsApp message** and follow the sandbox setup steps.  
+   - Send the provided code from your personal WhatsApp number to the sandbox number to activate.
+
+2. **Expose Your Spring Boot Backend Publicly using ngrok**  
+   - If not already installed, install ngrok:
+     ```bash
+     brew install ngrok/ngrok/ngrok
+     ```
+   - Start the tunnel:
+     ```bash
+     ngrok http 8001
+     ```
+   - Copy the HTTPS forwarding URL shown (e.g., `https://abc123.ngrok.io`).
+
+3. **Configure Twilio Webhook URL**  
+   - Go to the **WhatsApp Sandbox settings** in your Twilio Console.  
+   - In the field **"WHEN A MESSAGE COMES IN"**, paste:
+     ```
+     https://abc123.ngrok.io/twilio/webhook
+     ```
+   - This allows your backend to receive incoming WhatsApp messages.
+
+4. **Set Twilio Credentials in the Backend**  
+   Add the following to your `application.properties`:
+   ```properties
+   twilio.sid=your_twilio_account_sid
+   twilio.auth.token=your_twilio_auth_token
+   ```
+   Replace the placeholders with your actual Twilio credentials from the Twilio Console.
+
+---
+
 
 ### Troubleshooting:
 
@@ -111,7 +148,7 @@ The concise summary will appear below.
 ```
 
 
-Ensure Ollama service is running and accessible at the URL specified in your application.properties.
+Ensure Ollama service is running and accessible at the URL specified in application.yml.
 
 
 Git push errors:
@@ -131,6 +168,13 @@ Model not found:
 Make sure you have pulled the LLaMA 2 model correctly with Ollama.
 
 
+WhatsApp Messages Not Received:
+
+
+Verify Twilio webhook URLs and WhatsApp Sandbox configuration. Use ngrok or a similar tool to expose your local backend.
+
+
+
 ### Future Improvements:
 
 
@@ -143,7 +187,7 @@ User authentication and input privacy
 Enhanced summarization options and UI improvements
 
 
-WhatsApp message summarization integration (planned feature)
+WhatsApp group message summarization integration (planned feature)
 
 
 ---
