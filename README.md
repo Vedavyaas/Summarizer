@@ -140,41 +140,6 @@ The concise summary will appear below.
 ---
 
 
-### Troubleshooting:
-
-
-```bash
-500 Internal Server Error:
-```
-
-
-Ensure Ollama service is running and accessible at the URL specified in application.yml.
-
-
-Git push errors:
-
-
-If your remote repository has existing commits, pull changes first:
-
-
-```bash
-git pull --rebase origin main
-```
-
-
-Model not found:
-
-
-Make sure you have pulled the LLaMA 2 model correctly with Ollama.
-
-
-WhatsApp Messages Not Received:
-
-
-Verify Twilio webhook URLs and WhatsApp Sandbox configuration. Use ngrok or a similar tool to expose your local backend.
-
-
-
 ### Future Improvements:
 
 
