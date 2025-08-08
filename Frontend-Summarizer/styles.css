@@ -4,6 +4,12 @@
   margin: 0; padding: 0;
 }
 
+nav a.active:hover,
+nav a.active:focus {
+  text-decoration: none;
+  outline: none; /* removes the focus outline if any */
+}
+
 body {
   background: linear-gradient(to bottom right, #2b5876, #4e4376);
   color: white;
