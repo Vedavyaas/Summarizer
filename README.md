@@ -113,7 +113,7 @@ The concise summary will appear below.
 2. **Expose Your Spring Boot Backend Publicly using ngrok**  
    - If not already installed, install ngrok:
      ```bash
-     brew install ngrok/ngrok/ngrok
+     brew install ngrok/ngrok/ngrok(for macOS and Linux)
      ```
    - Start the tunnel:
      ```bash
