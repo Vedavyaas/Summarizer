@@ -24,7 +24,7 @@ public class AiService {
         Prompt requestPrompt = new Prompt(
                 List.of(new UserMessage(prompt)),
                 OllamaOptions.builder()
-                        .model("llama2")
+                        .model("llama3")
                         .build()
         );
 

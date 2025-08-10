@@ -35,12 +35,8 @@ public class TwilioController {
     @PostMapping("/webhook")
     public void receiveMessage(@RequestParam("From") String from, @RequestParam("Body") String body) {
         String summary = aiController.whatsAppResponse(body);
-
         WhatsappMessageEntity summarized = new WhatsappMessageEntity(summary, from);
         whatsappMessageRepository.save(summarized);
-
-        System.out.println("SID: " + twilioConfig.getSid());
-        System.out.println("TOKEN: " + twilioConfig.getAuthToken());
 
     }
 

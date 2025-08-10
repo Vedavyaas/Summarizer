@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WhatsApp Messages - Summarizer</title>
+    <style>
+        /* Reset & base */
+        * {
+          box-sizing: border-box;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0; padding: 0;
+        }
+        body {
+          background: linear-gradient(to bottom right, #2b5876, #4e4376);
+          color: white;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px 0;
+        }
+
+        /* Header/Nav */
+        header {
+          background: linear-gradient(90deg, #0072ff, #00c6ff);
+          padding: 12px 0;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+          position: sticky;
+          top: 0;
+          width: 100%;
+          z-index: 100;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        nav {
+          display: flex;
+          gap: 28px;
+          font-weight: 700;
+          font-size: 1.1rem;
+          max-width: 700px;
+          width: 100%;
+          justify-content: center;
+          align-items: center;
+        }
+        nav a {
+          color: white;
+          text-decoration: none;
+          padding: 10px 20px;
+          border-radius: 30px;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+          user-select: none;
+        }
+        nav a:hover {
+          background-color: rgba(255, 255, 255, 0.3);
+          transform: scale(1.1);
+        }
+        nav a.active {
+          background-color: white;
+          color: #0072ff;
+          cursor: default;
+          box-shadow: 0 0 8px #00c6ffaa;
+          transform: scale(1.15);
+        }
+
+        /* Container */
+        .container {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 20px;
+          padding: 30px;
+          width: 90%;
+          max-width: 700px;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          margin-top: 30px;
+          text-align: center;
+        }
+
+        /* Headings */
+        h1 {
+          color: #00c6ff;
+          margin-bottom: 20px;
+        }
+
+        /* WhatsApp messages container */
+        #whatsapp-messages {
+          background-color: #222;
+          padding: 15px;
+          border-radius: 12px;
+          color: white;
+          min-height: 120px;
+          max-height: 400px;
+          overflow-y: auto;
+          white-space: pre-wrap;
+          text-align: left;
+          margin-top: 20px;
+          font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/" id="nav-home">Home</a>
+        <a href="/whatsapp" class="active" id="nav-whatsapp">WhatsApp</a>
+        <a href="/docs" id="nav-docs">Docs</a>
+        <a href="/about" id="nav-about">About</a>
+    </nav>
+</header>
+
+<main class="container">
+    <h1>WhatsApp Messages</h1>
+
+    <pre id="whatsapp-messages">Loading WhatsApp messages...</pre>
+</main>
+
+<script>
+    async function loadWhatsAppMessages() {
+      const container = document.getElementById('whatsapp-messages');
+      try {
+        const response = await fetch('http://localhost:8001/twilio/messages');
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const messages = await response.json();
+        if (messages.length === 0) {
+          container.textContent = 'No messages found.';
+          return;
+        }
+
+        container.textContent = messages.map(msg => `
+From: ${escapeHtml(msg.sender)}
+Message:
+${escapeHtml(msg.message)}
+------------------------------------
+        `).join('\n');
+      } catch (err) {
+        container.textContent = 'Failed to load messages: ' + err.message;
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    window.addEventListener('DOMContentLoaded', loadWhatsAppMessages);
+</script>
+</body>
+</html>

@@ -9,17 +9,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/control")
 public class AiController {
 
+    private final String prompting = "Summarize the paragraph into one professional sentence. Then list up to 10 single-word bullets for core topic, purpose, and key takeaway. Output only the sentence and bullets. No extra text or comments.\n";
     @Autowired
     private AiService aiService;
     //http://localhost:8001/control/api
     @GetMapping("/api")
     public String aiResponse(@RequestParam String messages){
-            String promptMessage = "Summarize the following paragraph into a clear, professional one-liner, highlighting the core topic, purpose, and key takeaway in bullets upto 10 words." + messages;
+            String promptMessage = prompting + messages;
             return (aiService.getResult(promptMessage));
     }
 
     public String whatsAppResponse(String whatsAppMessage){
-          String promptMessage = "Summarize the following paragraph into a clear, professional one-liner, highlighting the core topic, purpose, and key takeaway in bullets upto 10 words." + whatsAppMessage;
+          String promptMessage = prompting + whatsAppMessage;
           return (aiService.getResult(promptMessage));
     }
 

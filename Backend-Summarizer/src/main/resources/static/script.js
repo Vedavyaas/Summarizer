@@ -18,7 +18,7 @@ async function summarize() {
   outputArea.classList.add("hidden");
 
   try {
-    const response = await fetch(`http://localhost:8001/control/api?messages=${encodeURIComponent(text)}`);
+    const response = await fetch(`/control/api?messages=${encodeURIComponent(text)}`);
 
     if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
