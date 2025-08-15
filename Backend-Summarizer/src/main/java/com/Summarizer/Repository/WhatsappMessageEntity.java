@@ -16,19 +16,32 @@ public class WhatsappMessageEntity {
     @Lob
     private String message;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     public WhatsappMessageEntity() {
     }
 
-    public WhatsappMessageEntity(String message, String sender) {
+    public WhatsappMessageEntity(String message, String sender, User user) {
         this.message = message;
         this.sender = sender;
+        this.user = user;
     }
 
     public String getSender() {
         return sender;
     }
 
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

@@ -15,7 +15,6 @@ import java.util.List;
 public class AiService {
 
     /* https://docs.spring.io/spring-ai/reference/api/chat/ollama-chat.html
-         The above link for ollama AI documentation
     */
     @Autowired
     private OllamaChatModel chatModel;

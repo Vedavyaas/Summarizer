@@ -1,22 +1,15 @@
-/*      Run your Spring Boot app locally on port 8001.
-        Download and install ngrok from https://ngrok.com/download or use this in terminal brew install ngrok/ngrok/ngrok.
-        Open your terminal and run:
-        ##ngrok http 8001##
-        Copy the https URL that ngrok gives you (like https://abc123.ngrok.io).
-        Go to your Twilio dashboard and set the webhook URL to:
-        https://80b337899e4e.ngrok-free.app/twilio/webhook
-        Now Twilio will send WhatsApp messages to your local app through ngrok!
-        Keep ngrok running while you test.    */
-
 package com.Summarizer.Controller;
 
-import com.Summarizer.Config.TwilioConfig;
+import com.Summarizer.Repository.User;
+import com.Summarizer.Repository.UserRepository;
 import com.Summarizer.Repository.WhatsappMessageEntity;
 import com.Summarizer.Repository.WhatsappMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -24,24 +17,31 @@ import java.util.List;
 public class TwilioController {
 
     @Autowired
-    private AiController aiController;
+    private UserRepository userRepository;
 
     @Autowired
     private WhatsappMessageRepository whatsappMessageRepository;
 
     @Autowired
-    private TwilioConfig twilioConfig;
+    private AiController aiController;
 
     @PostMapping("/webhook")
-    public void receiveMessage(@RequestParam("From") String from, @RequestParam("Body") String body) {
-        String summary = aiController.whatsAppResponse(body);
-        WhatsappMessageEntity summarized = new WhatsappMessageEntity(summary, from);
-        whatsappMessageRepository.save(summarized);
+    public void receiveMessage(@RequestParam("From") String from,
+                               @RequestParam("Body") String body,
+                               Authentication authentication) {
+        Optional<User> optionalUser = userRepository.findByPhoneNumber(
+                from.startsWith("whatsapp:") ? from.substring(9) : from
+        );
 
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            String summary = aiController.whatsAppResponse(body);
+            WhatsappMessageEntity message = new WhatsappMessageEntity(summary, from, user);
+            whatsappMessageRepository.save(message);
+        }
     }
-
     @GetMapping("/messages")
-    public List<WhatsappMessageEntity> getAllMessages() {
-        return whatsappMessageRepository.findAll();
+    public List<WhatsappMessageEntity> getMessagesForUser(Authentication authentication) {
+        return whatsappMessageRepository.findByUser_Username(authentication.getName());
     }
 }

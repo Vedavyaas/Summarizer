@@ -33,4 +33,3 @@ build/
 .vscode/
 
 twilio.properties
-gmail.properties
