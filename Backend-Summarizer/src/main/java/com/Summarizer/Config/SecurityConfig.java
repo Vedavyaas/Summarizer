@@ -20,20 +20,19 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/register/**").permitAll()
-                        .requestMatchers("/twilio/webhook").permitAll()
-                        .requestMatchers("/otp/**").permitAll()
-                        .requestMatchers("/h2-console/**").hasRole("ADMIN")
+                        .requestMatchers("/", "/about", "/docs", "/register/**","/control/**","/otp/**","/twilio/**").permitAll()
+                        .requestMatchers("/whatsapp/**").authenticated()
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
-                .userDetailsService(userDetailsService)
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/twilio/webhook", "/otp/**", "/h2-console/**")
+                .formLogin(form -> form
+                        .loginPage("/login")       // your custom login page
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
                 )
-                .headers(headers -> headers
-                        .frameOptions(frame -> frame.sameOrigin())
-                );
+                .logout(logout -> logout.permitAll())
+                .userDetailsService(userDetailsService)
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**","/otp/**","/register/**","/twilio/**"))
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         return http.build();
     }

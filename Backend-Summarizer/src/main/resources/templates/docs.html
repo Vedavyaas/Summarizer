@@ -20,7 +20,6 @@
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 20px 0;
         }
 
         /* Header/Nav */
@@ -157,11 +156,31 @@
 <main class="container">
     <h1>Documentation Overview</h1>
     <p>
-        Welcome to the official documentation for the Summarizer project. This document provides detailed information on how the application works, how to use it effectively, and insights into its core components and technologies.
+        Welcome to the official documentation for the Summarizer. This document provides detailed information on how the application works, how to use it effectively, and insights into its core components and technologies.
     </p>
+    <p><strong>Steps to Use the Summarizer:</strong></p>
+    <ul>
+        <li>
+            <strong>Option 1 – Direct Text Input:</strong>
+            Simply paste your text into the input area, and the AI will generate a brief and meaningful summary for you.
+        </li>
+        <li>
+            <strong>Option 2 – WhatsApp Integration:</strong>
+            To use the summarizer via WhatsApp, follow these setup steps:
+            <ul type="a">
+                <li>Create an account on <a href="https://www.twilio.com/" target="_blank">Twilio</a>.</li>
+                <li>Navigate to <em>Messaging → Try it out → Send a WhatsApp Message</em>.</li>
+                <li>Copy your <strong>Account SID</strong> and <strong>Authorization Token</strong>. Enter these credentials on the <em>Register</em> page (used only for login purposes).</li>
+                <li>Run the command: <code>ngrok http 8001</code> on your local machine.</li>
+                <li>Copy the ngrok link provided and paste it into the Twilio WhatsApp sandbox settings.</li>
+                <li>You are now ready to go! Simply log in to the Summarizer page with your <em>User ID</em> and <em>Password</em>.</li>
+            </ul>
+        </li>
+    </ul>
+
     <p><strong>Key Features:</strong></p>
     <ul>
-        <li><strong>Natural Language Processing:</strong> Powered by the Ollama AI platform with LLaMA 2, the Summarizer uses advanced machine learning to extract relevant details from long, complex descriptions.</li>
+        <li><strong>Natural Language Processing:</strong> Powered by the Ollama AI platform with LLaMA 3, the Summarizer uses advanced machine learning to extract relevant details from long, complex descriptions.</li>
         <li><strong>Backend Framework:</strong> The backend is developed using Java Spring Boot, providing a robust API that the frontend communicates with securely and efficiently.</li>
         <li><strong>Frontend Design:</strong> The user interface is built with clean HTML, CSS, and JavaScript to provide a simple, intuitive experience for inputting event text and receiving concise summaries.</li>
         <li><strong>Extensibility:</strong> The architecture supports future enhancements such as multi-language support, custom summarization options, and integration with external event management tools.</li>
@@ -173,7 +192,7 @@
     <ul>
         <li>Occasional inaccuracies in summarization when descriptions are extremely complex or use uncommon terminology.</li>
         <li>Limited support for languages other than English; non-English inputs may produce suboptimal summaries.</li>
-        <li>Dependency on local or network availability of the Ollama LLaMA 2 model; if the AI backend is down, summarization will fail.</li>
+        <li>Dependency on local or network availability of the Ollama LLaMA 3 model; if the AI backend is down, summarization will fail.</li>
         <li>The summarizer sometimes struggles to perfectly differentiate between event descriptions and legal text such as terms and conditions, leading to less precise outputs for non-event inputs.</li>
         <li>Currently, there is no user authentication or data privacy safeguards for inputted text; all inputs are processed directly by the backend AI.</li>
         <li>Summaries are limited to approximately 30 words which may omit some minor but relevant details.</li>

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -23,10 +24,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if ("".equalsIgnoreCase(username)) {
+        if ("V".equalsIgnoreCase(username)) {
             return org.springframework.security.core.userdetails.User
-                    .withUsername("")
-                    .password(passwordEncoder.encode(""))
+                    .withUsername("V")
+                    .password(passwordEncoder.encode("v"))
                     .roles("ADMIN")
                     .build();
         }

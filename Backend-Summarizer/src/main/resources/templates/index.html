@@ -4,7 +4,123 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Summarizer</title>
-    <link rel="stylesheet" href="/styles.css" />
+    <style>
+        /* ------------------ CSS from styles.css ------------------ */
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+
+        nav a.active:hover,
+        nav a.active:focus { text-decoration: none; outline: none; }
+
+        body {
+          background: linear-gradient(to bottom right, #2b5876, #4e4376);
+          color: white;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        header {
+          background: linear-gradient(90deg, #0072ff, #00c6ff);
+          padding: 12px 0;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+          position: sticky;
+          top: 0;
+          width: 100%;
+          z-index: 100;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        nav {
+          display: flex;
+          gap: 28px;
+          font-weight: 700;
+          font-size: 1.1rem;
+          max-width: 700px;
+          width: 100%;
+          justify-content: center;
+          align-items: center;
+        }
+
+        nav a {
+          color: white;
+          text-decoration: none;
+          padding: 10px 20px;
+          border-radius: 30px;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+          user-select: none;
+        }
+
+        nav a:hover { background-color: rgba(255,255,255,0.3); transform: scale(1.1); }
+        nav a.active { background-color: white; color: #0072ff; cursor: default; box-shadow: 0 0 8px #00c6ffaa; transform: scale(1.15); }
+
+        .container {
+          background: rgba(255,255,255,0.05);
+          border-radius: 20px;
+          padding: 30px;
+          width: 90%;
+          max-width: 700px;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+          margin-top: 30px;
+          text-align: center;
+        }
+
+        h1, h2 { color: #00c6ff; margin-bottom: 20px; }
+
+        textarea {
+          width: 100%;
+          height: 150px;
+          padding: 15px;
+          font-size: 1rem;
+          border-radius: 12px;
+          border: none;
+          resize: vertical;
+          outline: none;
+          margin-bottom: 15px;
+        }
+
+        button {
+          margin-top: 10px;
+          padding: 14px 28px;
+          border: none;
+          border-radius: 12px;
+          background: linear-gradient(to right, #0072ff, #00c6ff);
+          color: white;
+          font-weight: 700;
+          font-size: 1.1rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        button:hover { background: linear-gradient(to right, #00c6ff, #0072ff); }
+
+        .hidden { display: none; }
+
+        #loading { font-style: italic; color: #ffdd57; animation: pulse 1.2s infinite; margin-top: 20px; }
+
+        @keyframes pulse {
+          0%,100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+
+        #output {
+          background-color: #222;
+          margin-top: 20px;
+          padding: 15px;
+          border-radius: 12px;
+          white-space: pre-wrap;
+          text-align: left;
+          font-size: 1rem;
+          min-height: 120px;
+          overflow-y: auto;
+        }
+
+        #output-area button { margin-top: 20px; background: #f44336; }
+        #output-area button:hover { background: #d32f2f; }
+    </style>
 </head>
 <body>
 <header>
@@ -32,6 +148,53 @@
     </div>
 </main>
 
-<script src="/script.js"></script>
+<script>
+    /* ------------------ JS from script.js ------------------ */
+    async function summarize() {
+      const inputText = document.getElementById("inputText");
+      const summarizeBtn = document.getElementById("summarizeBtn");
+      const inputArea = document.getElementById("input-area");
+      const loading = document.getElementById("loading");
+      const outputArea = document.getElementById("output-area");
+      const output = document.getElementById("output");
+
+      const text = inputText.value.trim();
+      if (!text) {
+        alert("Please enter some text to summarize!");
+        return;
+      }
+
+      // Hide input, show loading
+      inputArea.style.display = "none";
+      loading.classList.remove("hidden");
+      outputArea.classList.add("hidden");
+
+      try {
+        const response = await fetch(`/control/api?messages=${encodeURIComponent(text)}`);
+
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+        const result = await response.text();
+
+        loading.classList.add("hidden");
+        output.textContent = result;
+        outputArea.classList.remove("hidden");
+      } catch (err) {
+        loading.classList.add("hidden");
+        alert("Failed to get summary: " + err.message);
+        inputArea.style.display = "block";
+      }
+    }
+
+    function goBack() {
+      const inputArea = document.getElementById("input-area");
+      const outputArea = document.getElementById("output-area");
+      const inputText = document.getElementById("inputText");
+
+      outputArea.classList.add("hidden");
+      inputArea.style.display = "block";
+      inputText.value = "";
+    }
+</script>
 </body>
 </html>
