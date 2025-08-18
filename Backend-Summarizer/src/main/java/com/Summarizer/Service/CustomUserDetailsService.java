@@ -24,13 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if ("V".equalsIgnoreCase(username)) {
-            return org.springframework.security.core.userdetails.User
-                    .withUsername("V")
-                    .password(passwordEncoder.encode("v"))
-                    .roles("ADMIN")
-                    .build();
-        }
+
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
@@ -43,6 +37,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                 });
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        System.out.println("Saved user: " + user.getUsername());
     }
 }

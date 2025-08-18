@@ -18,11 +18,6 @@ public class WebController {
         return "login";
     }
 
-    /*@GetMapping("/register")
-    public String register() {
-        return "register";
-    }*/
-
     @GetMapping("/")
     public String index() {
         return "index";

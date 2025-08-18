@@ -32,7 +32,6 @@ public class TwilioController {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(
                 from.startsWith("whatsapp:") ? from.substring(9) : from
         );
-        System.out.println("Done");
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             String summary = aiController.whatsAppResponse(body);
