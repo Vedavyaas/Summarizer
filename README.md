@@ -1,158 +1,159 @@
 # Summarizer
 
-**AI-Powered Text Summarizer**
+**AI-Powered Text Summarization Tool**
 
 ---
 
-
-## Latest Update : August,7
-
-
-## Overview
-
-Summarizer is a lightweight web application that uses the Ollama AI platform (with LLaMA 2) and a Java Spring Boot backend to transform lengthy descriptions into concise, essential summaries. The frontend provides a simple and clean interface to input event text and receive a quick summary highlighting the most relevant details.
+## 📅 Latest Update: August 18
 
 ---
 
-## Features
+## 📖 Overview
 
-- Natural Language Processing using LLaMA 2 via Ollama
-- Robust Java Spring Boot backend API
-- Clean HTML/CSS/JavaScript frontend
-- Summarizes event details including name, date, venue, contacts, and brief description
-- Planned future feature: WhatsApp message summarization integration
+**Summarizer** is a lightweight web application that leverages the **Ollama AI platform (with LLaMA 3)** and a **Java Spring Boot backend** to transform long pieces of text into concise, meaningful summaries.  
+
+The frontend provides a clean and simple interface where users can paste or type text and instantly receive a summary highlighting the most important details.
+
 ---
 
-## Prerequisites
+## ✨ Features
 
-- Java Development Kit (JDK) 17 or above
-- Maven 3.8+
-- Ollama installed and LLaMA 2 model pulled locally
-- Docker (optional, if using Docker for Ollama)
-- Git
-- Twilio account with WhatsApp sandbox enabled (for WhatsApp integration)
+- 🔹 AI-powered text summarization using **LLaMA 3 via Ollama**  
+- 🔹 Reliable **Java Spring Boot backend API**  
+- 🔹 Minimal, user-friendly **HTML/CSS/JavaScript frontend**  
+- 🔹 Extracts and summarizes **descriptions,...**  
+- 🔹 🚀 Planned feature: **WhatsApp group message integration**  
+
 ---
 
-## Setup Instructions
+## 📦 Prerequisites
 
- 1. Clone the repository
+- **Java Development Kit (JDK) 17+**  
+- **Maven 3.8+**  
+- **Ollama installed** with LLaMA 3 model downloaded locally  
+- **Docker** (optional, if running Ollama in Docker)  
+- **Git**  
+- **Twilio account** with WhatsApp Sandbox enabled (for WhatsApp integration)  
 
+---
+
+## ⚙️ Setup Instructions
+
+### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/Vedavyaas/Summarizer.git
 cd Summarizer
 ```
-2. Backend Setup
+### 2️⃣ Backend Setup
 
 
-Navigate to the backend folder ( Backend-Summarizer):
-
+Navigate to the backend folder:
 
 ```bash
 cd Summarizer/Backend-Summarizer
 ```
+Build and run the Spring Boot backend.
 
 
-Build and run the Spring Boot backend
+The backend will start at:
 
 
-The backend should now be running at http://localhost:8001.
+http://localhost:8001
 
 
-4. Ollama & LLaMA 2 Setup
 
-   
-Download and install Ollama
+### 3️⃣ Ollama & LLaMA 3 Setup
 
 
-Pull the LLaMA 2 model:
-
+Install Ollama and pull the LLaMA 3 model:
 
 ```bash
-ollama pull llama2:latest
+ollama pull llama3:latest
 ```
 
 
-Make sure Ollama is running locally, and the model is ready.
+Ensure Ollama is running locally and the model is available.
 
 
-5. Frontend Setup
-
-   
-Navigate to the frontend folder (Frontend-Summarizer):
+### 4️⃣ Usage
+Open the application in your browser:
 
 
 ```bash
-cd Summarizer/Frontend-Summarizer
+http://localhost:8001
 ```
-
-
-Open index.html directly in a browser.
-
-
-6. Usage
-
-   
-Open the Home page.
-
-
-Paste or type a lengthy event description into the input box.
+Paste or type any long text or event description.
 
 
 Click Summarize.
 
 
-The concise summary will appear below.
-
-## WhatsApp Integration Setup
-
-1. **Create a Twilio Account and Enable WhatsApp Sandbox**  
-   - Sign up or log in to Twilio.  
-   - Navigate to **Messaging → Try it Out → Send a WhatsApp message** and follow the sandbox setup steps.  
-   - Send the provided code from your personal WhatsApp number to the sandbox number to activate.
-
-2. **Expose Your Spring Boot Backend Publicly using ngrok**  
-   - If not already installed, install ngrok:
-     ```bash
-     brew install ngrok/ngrok/ngrok(for macOS and Linux)
-     ```
-   - Start the tunnel:
-     ```bash
-     ngrok http 8001
-     ```
-   - Copy the HTTPS forwarding URL shown (e.g., `https://abc123.ngrok.io`).
-
-3. **Configure Twilio Webhook URL**  
-   - Go to the **WhatsApp Sandbox settings** in your Twilio Console.  
-   - In the field **"WHEN A MESSAGE COMES IN"**, paste:
-     ```
-     https://abc123.ngrok.io/twilio/webhook
-     ```
-   - This allows your backend to receive incoming WhatsApp messages.
-
-4. **Set Twilio Credentials in the Backend**  
-   Add the following to your `application.properties`:
-   ```properties
-   twilio.sid=your_twilio_account_sid
-   twilio.auth.token=your_twilio_auth_token
-   ```
-   Replace the placeholders with your actual Twilio credentials from the Twilio Console.
-
----
+A concise summary will appear below.
 
 
-### Future Improvements:
+### 5️⃣ WhatsApp Integration
 
 
-Multi-language support
+Create a Twilio account and configure credentials (Account SID and Auth Token are available in your Twilio console). Once logged in, you can use the WhatsApp integration feature.
 
 
-User authentication and input privacy
+###📲 WhatsApp Integration Setup
 
 
-Enhanced summarization options and UI improvements
+Create a Twilio Account & Enable WhatsApp Sandbox
 
 
-WhatsApp group message summarization integration (planned feature)
+Sign up or log in to Twilio.
 
 
----
+Go to Messaging → Try it Out → Send a WhatsApp message.
+
+
+Follow the sandbox activation steps (send the given code from your WhatsApp to the sandbox number).
+
+
+Expose Your Backend Publicly with ngrok
+
+
+Install ngrok:
+
+
+brew install ngrok/ngrok/ngrok   # for macOS/Linux
+
+
+Start a tunnel:
+
+```bash
+ngrok http 8001
+```
+Copy the HTTPS forwarding URL shown (e.g., https://abc123.ngrok.io).
+
+
+Configure Twilio Webhook URL
+
+
+In Twilio Console → WhatsApp Sandbox settings, set "When a message comes in" to:
+
+```bash
+https://abc123.ngrok.io/twilio/webhook  (POST)
+```
+
+Now your ready to Create an Account in the Summarizer.
+
+
+🚀 Future Improvements
+
+
+🌍 Multi-language summarization support
+
+
+🎨 Advanced summarization styles and options
+
+
+💻 Improved UI/UX
+
+
+📱 WhatsApp group message summarization (planned)
+
+
+✨ With Summarizer, you can quickly condense lengthy event details or descriptions into clear, actionable insights — powered by LLaMA 3 and Spring Boot.
