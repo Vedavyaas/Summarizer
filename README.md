@@ -18,11 +18,11 @@ The frontend provides a clean and simple interface where users can paste or type
 
 ## ✨ Features
 
-- 🔹 AI-powered text summarization using **LLaMA 3 via Ollama**  
-- 🔹 Reliable **Java Spring Boot backend API**  
-- 🔹 Minimal, user-friendly **HTML/CSS/JavaScript frontend**  
-- 🔹 Extracts and summarizes **descriptions,...**  
-- 🔹 🚀 Planned feature: **WhatsApp group message integration**  
+🔹 AI-powered text summarization using **LLaMA 3 via Ollama**  
+🔹 Reliable **Java Spring Boot backend API**  
+🔹 Minimal, user-friendly **HTML/CSS/JavaScript frontend**  
+🔹 Extracts and summarizes **descriptions,...**  
+🔹 🚀 Planned feature: **WhatsApp group message integration**  
 
 ---
 
