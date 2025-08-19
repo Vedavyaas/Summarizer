@@ -1,30 +1,30 @@
-# Use official Java 17 JDK
-FROM openjdk:17-jdk-slim
-
-# Set working directory
+# ---- Stage 1: Build ----
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy Maven wrapper and project files
-COPY mvnw pom.xml ./
-COPY .mvn .mvn
+# Copy only pom.xml first for dependency caching
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
 # Copy source code
 COPY src src
 
-# Make Maven wrapper executable
-RUN chmod +x mvnw
+# Build the app (skip tests for faster build)
+RUN mvn clean package -DskipTests
 
-# Build the app
-RUN ./mvnw clean package -DskipTests
+# ---- Stage 2: Run ----
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
 
-# Copy the JAR to a standard location
-RUN cp target/*.jar app.jar
+# Copy only the built jar from previous stage
+COPY --from=build /app/target/*.jar app.jar
 
-# Expose port 8080
-EXPOSE 8080
+# Expose custom port
+EXPOSE 8001
 
-# Environment variable for Render
-ENV PORT=8080
+# Default port for the container
+ENV PORT=8001
 
-# Run the app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run the app on port 8001
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=${PORT}"]
+
