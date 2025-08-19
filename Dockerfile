@@ -2,18 +2,20 @@
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy only pom.xml first for dependency caching
-COPY pom.xml .
+# Copy pom.xml from Backend-Summarizer
+COPY Backend-Summarizer/pom.xml .
+
+# Pre-download dependencies
 RUN mvn dependency:go-offline
 
 # Copy source code
-COPY src src
+COPY Backend-Summarizer/src src
 
 # Build the app (skip tests for faster build)
 RUN mvn clean package -DskipTests
 
 # ---- Stage 2: Run ----
-FROM eclipse-temurin:17-jdk-alpine
+FROM mcr.microsoft.com/openjdk/jdk:17-ubuntu
 WORKDIR /app
 
 # Copy only the built jar from previous stage
