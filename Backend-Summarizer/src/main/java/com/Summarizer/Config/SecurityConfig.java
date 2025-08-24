@@ -20,18 +20,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/", "/about", "/docs", "/register/**","/control/**","/otp/**","/twilio/**").permitAll()
+                        .requestMatchers("/", "/about", "/docs", "/register/**","/control/**","/otp/**","/twilio/**","/reset/**","/reset-page").permitAll()
                         .requestMatchers("/whatsapp/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")       // your custom login page
+                        .loginPage("/login")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll())
                 .userDetailsService(userDetailsService)
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**","/otp/**","/register/**","/twilio/**"))
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**","/otp/**","/register/**","/twilio/**","/reset/**","/reset-page"))
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         return http.build();

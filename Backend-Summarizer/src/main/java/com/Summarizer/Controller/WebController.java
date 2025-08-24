@@ -7,10 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class WebController {
+
     @GetMapping("/register")
     public String showRegisterForm(Model model){
         model.addAttribute("user", new User());
         return "register";
+    }
+
+    @GetMapping("/reset-page")
+    public String resetAccount(){
+        return "reset";
     }
 
     @GetMapping("/login")

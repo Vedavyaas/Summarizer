@@ -33,15 +33,14 @@ public class OTPController {
     }
 
     private final Map<String, OtpDetails> otpStorage = new HashMap<>();
-    private final String LATEST_KEY = "latest";
-    private final long OTP_VALID_DURATION = 2 * 60 * 1000; // 2 minutes
+    private final long OTP_VALID_DURATION = 2 * 60 * 1000;
 
     @GetMapping("/generate")
     public String otpGenerator(@RequestParam String phoneNumber,
                                @RequestParam String sid,
                                @RequestParam String auth) {
         String generatedOtp = String.format("%06d", new SecureRandom().nextInt(1000000));
-        otpStorage.put(LATEST_KEY, new OtpDetails(generatedOtp, Instant.now()));
+        otpStorage.put(phoneNumber, new OtpDetails(generatedOtp, Instant.now()));
 
         Twilio.init(sid, auth);
         try {
@@ -60,13 +59,18 @@ public class OTPController {
         }
     }
 
-    @PostMapping("/checker")
-    public boolean otpChecker(@RequestParam String otp) {
-        OtpDetails details = otpStorage.get(LATEST_KEY);
+    public boolean otpChecker(String phoneNumber, String otp) {
+        OtpDetails details = otpStorage.get(phoneNumber);
         if (details == null) return false;
-
-        return otp != null &&
+        boolean valid = otp != null &&
                 otp.equals(details.getOtp()) &&
                 Instant.now().isBefore(details.getCreationTime().plusMillis(OTP_VALID_DURATION));
+        if (valid) otpStorage.remove(phoneNumber);
+        return valid;
+    }
+
+    @PostMapping("/checker")
+    public boolean otpCheckerApi(@RequestParam String phoneNumber, @RequestParam String otp) {
+        return otpChecker(phoneNumber, otp);
     }
 }
