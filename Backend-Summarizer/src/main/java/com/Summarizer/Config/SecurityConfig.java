@@ -20,7 +20,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/", "/about", "/docs", "/register/**","/control/**","/otp/**","/twilio/**","/reset/**","/reset-page").permitAll()
+                        .requestMatchers("/", "/about", "/docs", "/register/**","/control/**","/otp/**","/twilio/**","/reset/**","/reset-page","/summarize").permitAll()
                         .requestMatchers("/whatsapp/**").authenticated()
                         .anyRequest().authenticated()
                 )

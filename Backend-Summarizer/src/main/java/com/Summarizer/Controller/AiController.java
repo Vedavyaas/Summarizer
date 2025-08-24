@@ -27,8 +27,8 @@ public class AiController {
     private String getGroqResult(String prompt) {
 
         Dotenv dotenv = Dotenv.load();
-        String apiKey = dotenv.get("GROQ_API_KEY");
-        String apiUrl = dotenv.get("GROQ_API_URL");
+        String apiKey = System.getenv("GROQ_API_KEY");
+        String apiUrl = System.getenv("GROQ_API_URL");
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
