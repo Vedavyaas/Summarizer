@@ -31,7 +31,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout.permitAll())
                 .userDetailsService(userDetailsService)
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**","/otp/**","/register/**","/twilio/**","/reset/**","/reset-page"))
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**","/otp/**","/register/**","/twilio/**","/reset/**","/reset-page","/control/**"))
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         return http.build();
