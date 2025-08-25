@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Forgot Password</title>
+    <title>Account Management</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; }
         body { background: linear-gradient(to bottom right, #2b5876, #4e4376); color:white; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:20px 0; }
@@ -19,6 +19,9 @@
         button:hover { background: linear-gradient(to right,#00c6ff,#0072ff); }
         .hidden { display:none; }
         #message { margin-top:15px; color:#ffdd57; }
+        .option-group { margin-top: 25px; }
+        .option-group button { margin: 0 8px 8px 0; }
+        .option-section { margin-top: 18px; }
     </style>
 </head>
 <body>
@@ -27,17 +30,25 @@
         <a href="/" >Home</a>
         <a href="/login">Login</a>
         <a href="/register">Create Account</a>
-        <a href="/forget-password" class="active">Forgot Password</a>
+        <a href="/reset-page" class="active">Account Management</a>
     </nav>
 </header>
 <div class="container">
-    <h1>Forgot Password</h1>
+    <h1>Account Management</h1>
     <form id="otpForm" autocomplete="off">
         <input type="text" id="phoneNumber" placeholder="Phone Number" required />
         <button type="button" id="sendOtpBtn">Send OTP</button>
         <div id="otpSection" class="hidden">
             <input type="text" id="otp" placeholder="Enter OTP" required />
-            <button type="button" id="deleteBtn">Delete Account</button>
+            <div class="option-group">
+                <button type="button" id="showUsernameBtn">Show Username</button>
+                <button type="button" id="changePasswordBtn">Change Password</button>
+                <button type="button" id="deleteBtn" style="background:linear-gradient(to right,#ff4e50,#f9d423);color:#222;">Delete Account</button>
+            </div>
+            <div id="changePasswordSection" class="option-section hidden">
+                <input type="password" id="newPassword" placeholder="New Password" required />
+                <button type="button" id="confirmChangeBtn">Confirm Change</button>
+            </div>
         </div>
     </form>
     <div id="message"></div>
@@ -45,7 +56,11 @@
 <script>
     const sendOtpBtn = document.getElementById('sendOtpBtn');
     const deleteBtn = document.getElementById('deleteBtn');
+    const showUsernameBtn = document.getElementById('showUsernameBtn');
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+    const confirmChangeBtn = document.getElementById('confirmChangeBtn');
     const otpSection = document.getElementById('otpSection');
+    const changePasswordSection = document.getElementById('changePasswordSection');
     const messageDiv = document.getElementById('message');
 
     sendOtpBtn.onclick = async () => {
@@ -61,6 +76,43 @@
         messageDiv.textContent = text;
         otpSection.classList.remove('hidden');
         sendOtpBtn.disabled = false;
+    };
+
+    showUsernameBtn.onclick = async () => {
+        const phoneNumber = document.getElementById('phoneNumber').value.trim();
+        const otp = document.getElementById('otp').value.trim();
+        messageDiv.textContent = '';
+        if (!otp) {
+            messageDiv.textContent = "Please enter the OTP.";
+            return;
+        }
+        showUsernameBtn.disabled = true;
+        const res = await fetch(`/reset/username?phoneNumber=${encodeURIComponent(phoneNumber)}&otp=${encodeURIComponent(otp)}`);
+        const text = await res.text();
+        messageDiv.textContent = "Your username: " + text;
+        showUsernameBtn.disabled = false;
+    };
+
+    changePasswordBtn.onclick = () => {
+        changePasswordSection.classList.remove('hidden');
+    };
+
+    confirmChangeBtn.onclick = async () => {
+        const phoneNumber = document.getElementById('phoneNumber').value.trim();
+        const otp = document.getElementById('otp').value.trim();
+        const newPassword = document.getElementById('newPassword').value.trim();
+        messageDiv.textContent = '';
+        if (!otp || !newPassword) {
+            messageDiv.textContent = "Please enter the OTP and new password.";
+            return;
+        }
+        confirmChangeBtn.disabled = true;
+        const res = await fetch(`/reset/password?phoneNumber=${encodeURIComponent(phoneNumber)}&otp=${encodeURIComponent(otp)}&newPassword=${encodeURIComponent(newPassword)}`, {
+            method: 'POST'
+        });
+        const text = await res.text();
+        messageDiv.textContent = text;
+        confirmChangeBtn.disabled = false;
     };
 
     deleteBtn.onclick = async () => {

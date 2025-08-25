@@ -27,8 +27,7 @@ public class TwilioController {
 
     @PostMapping("/webhook")
     public void receiveMessage(@RequestParam("From") String from,
-                               @RequestParam("Body") String body,
-                               Authentication authentication) {
+                               @RequestParam("Body") String body) {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(
                 from.startsWith("whatsapp:") ? from.substring(9) : from
         );
