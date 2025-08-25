@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Documentation - Summarizer</title>
     <style>
-        /* Reset and base */
+
         * {
           box-sizing: border-box;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,7 +22,6 @@
           align-items: center;
         }
 
-        /* Header/Nav */
         header {
           background: linear-gradient(90deg, #0072ff, #00c6ff);
           padding: 12px 0;
@@ -69,7 +68,6 @@
           transform: scale(1.15);
         }
 
-        /* Main content container */
         main.container {
           background: rgba(255, 255, 255, 0.05);
           border-radius: 20px;
@@ -83,7 +81,6 @@
           line-height: 1.6;
         }
 
-        /* Headings */
         h1 {
           color: #00c6ff;
           margin-bottom: 24px;
@@ -99,14 +96,12 @@
           font-weight: 700;
         }
 
-        /* Paragraph text */
         p {
           font-size: 1.05rem;
           color: #dcefff;
           margin-bottom: 1.3rem;
         }
 
-        /* Lists */
         ul {
           padding-left: 24px;
           margin-bottom: 1.5rem;
@@ -118,14 +113,12 @@
           font-size: 1.05rem;
         }
 
-        /* Highlights */
         strong {
           color: #00aaff;
           font-weight: 700;
           text-decoration: underline dotted;
         }
 
-        /* Responsive */
         @media (max-width: 480px) {
           main.container {
             padding: 20px 20px;
@@ -171,8 +164,7 @@
                 <li>Create an account on <a href="https://www.twilio.com/" target="_blank">Twilio</a>.</li>
                 <li>Navigate to <em>Messaging → Try it out → Send a WhatsApp Message</em>.</li>
                 <li>Copy your <strong>Account SID</strong> and <strong>Authorization Token</strong>. Enter these credentials on the <em>Register</em> page (used only for login purposes).</li>
-                <li>Run the command: <code>ngrok http 8001</code> on your local machine.</li>
-                <li>Copy the ngrok link provided and paste it into the Twilio WhatsApp sandbox settings.</li>
+                <li> paste the link (https://summarizer-uhwl.onrender.com) into the Twilio WhatsApp sandbox settings.</li>
                 <li>You are now ready to go! Simply log in to the Summarizer page with your <em>User ID</em> and <em>Password</em>.</li>
             </ul>
         </li>
@@ -187,14 +179,12 @@
         <li><strong>Upcoming Feature:</strong> Planned integration for WhatsApp group message summarization, enabling users to summarize long message threads directly within WhatsApp groups for easier reading and sharing.</li>
     </ul>
     <p><strong>Using the Application:</strong> To use the Summarizer, simply paste the full description into the text area on the home page, then click the "Summarize" button. The AI will process the input and return a brief description.</p>
-    <p><strong>Technical Notes:</strong> The AI processing is performed via the Ollama API running locally or remotely, depending on your configuration. The Java backend handles prompt preparation and API communication, while the frontend handles user interaction and display.The app also integrates WhatsApp messaging via Twilio’s webhook; incoming WhatsApp messages are summarized by the AI backend and stored in a database, with responses sent back automatically and accessible through the web frontend.</p>
+    <p><strong>Technical Notes:</strong> The AI processing is performed via the Ollama API. The Java backend handles prompt preparation and API communication, while the frontend handles user interaction and display.The app also integrates WhatsApp messaging via Twilio’s webhook; incoming WhatsApp messages are summarized by the AI backend and stored in a database, with responses sent back automatically and accessible through the web frontend.</p>
     <h2>Known Defects and Limitations</h2>
     <ul>
         <li>Occasional inaccuracies in summarization when descriptions are extremely complex or use uncommon terminology.</li>
         <li>Limited support for languages other than English; non-English inputs may produce suboptimal summaries.</li>
-        <li>Dependency on local or network availability of the Ollama LLaMA 3 model; if the AI backend is down, summarization will fail.</li>
         <li>The summarizer sometimes struggles to perfectly differentiate between event descriptions and legal text such as terms and conditions, leading to less precise outputs for non-event inputs.</li>
-        <li>Currently, there is no user authentication or data privacy safeguards for inputted text; all inputs are processed directly by the backend AI.</li>
         <li>Summaries are limited to approximately 30 words which may omit some minor but relevant details.</li>
     </ul>
     <p>These limitations are actively being addressed in future versions to improve accuracy, expand language support, and enhance security.</p>
