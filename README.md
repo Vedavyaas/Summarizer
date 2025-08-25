@@ -56,7 +56,7 @@ A concise summary will appear below.
 Create a Twilio account and configure credentials (Account SID and Auth Token are available in your Twilio console). Once logged in, you can use the WhatsApp integration feature.
 
 
-###📲 WhatsApp Integration Setup
+### 📲 WhatsApp Integration Setup
 
 
 Create a Twilio Account & Enable WhatsApp Sandbox
@@ -82,6 +82,8 @@ https://summarizer-uhwl.onrender.com/twilio/webhook  (POST)
 Now your ready to Create an Account in the Summarizer.
 
 
+
+
 🚀 Future Improvements
 
 
@@ -95,6 +97,8 @@ Now your ready to Create an Account in the Summarizer.
 
 
 📱 WhatsApp group message summarization (planned)
+
+
 
 
 ✨ With Summarizer, you can quickly condense lengthy event details or descriptions into clear, actionable insights — powered by LLaMA 3 and Spring Boot.
