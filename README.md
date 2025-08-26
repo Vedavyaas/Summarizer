@@ -1,4 +1,4 @@
-# Summarizer
+# Summarizer(in-progress)
 
 **AI-Powered Text Summarization Tool**
 
