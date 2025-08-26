@@ -10,7 +10,7 @@ import java.util.*;
 @RequestMapping("/control")
 public class AiController {
 
-    private final String prompting = "Summarize the paragraph into one professional sentence. Then list up to 10 single-word bullets for core topic, purpose, and key takeaway. Output only the sentence and bullets. No extra text or comments.\n";
+    private final String prompting = "\"Describe the subject vividly and concisely, capturing its key features,atmosphere, emotions, and significance in 1–3 sentences.Make it immersive, clear, and adaptable to any context,whether an event, place, person, object, or abstract idea.\n";
 
     @GetMapping("/api")
     public String aiResponse(@RequestParam String messages){
