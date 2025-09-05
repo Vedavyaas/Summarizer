@@ -1,10 +1,10 @@
 package com.Summarizer.Controller;
 
 import com.Summarizer.Repository.UserRepository;
-import com.Summarizer.Repository.WhatsappMessageRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,8 +19,6 @@ public class ResetController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private WhatsappMessageRepository whatsappMessageRepository;
 
     @GetMapping("/account")
     public String reset(@RequestParam String phoneNumber) {
@@ -30,14 +28,12 @@ public class ResetController {
         return "OTP sent to your WhatsApp number.";
     }
 
-    @Transactional
     @DeleteMapping("/account")
     public String deleteAccount(@RequestParam String phoneNumber, @RequestParam String otp) {
         boolean verified = otpController.otpChecker(phoneNumber, otp);
         if (!verified) {
             return "OTP verification failed. Account not deleted.";
         }
-        whatsappMessageRepository.delete(phoneNumber);
         userRepository.deleteByPhoneNumber(phoneNumber);
         return "Account deleted successfully.";
     }
@@ -60,6 +56,6 @@ public class ResetController {
         if (!verified) {
             return "OTP verification failed. Password not changed.";
         }
-        return  userRepository.getUsernameByPhoneNumber(phoneNumber);
+        return "Username: " + userRepository.getUsernameByPhoneNumber(phoneNumber);
     }
 }

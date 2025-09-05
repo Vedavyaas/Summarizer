@@ -18,8 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.auth FROM User u WHERE u.phoneNumber = :phoneNumber")
     String getAuthByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
-    @Modifying
-    @Query("DELETE FROM User u WHERE u.phoneNumber = :phoneNumber")
     void deleteByPhoneNumber(String phoneNumber);
 
     @Modifying
