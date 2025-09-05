@@ -28,16 +28,6 @@ public class ResetController {
         return "OTP sent to your WhatsApp number.";
     }
 
-    @DeleteMapping("/account")
-    public String deleteAccount(@RequestParam String phoneNumber, @RequestParam String otp) {
-        boolean verified = otpController.otpChecker(phoneNumber, otp);
-        if (!verified) {
-            return "OTP verification failed. Account not deleted.";
-        }
-        userRepository.deleteByPhoneNumber(phoneNumber);
-        return "Account deleted successfully.";
-    }
-
     @Transactional
     @PostMapping("/password")
     public String resetPassword(@RequestParam String phoneNumber, @RequestParam String otp, @RequestParam String newPassword) {
